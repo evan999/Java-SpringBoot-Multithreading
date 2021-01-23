@@ -30,4 +30,16 @@ public class Car implements Serializable {
     @NotNull
     @Column(nullable = false)
     private String type;
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
