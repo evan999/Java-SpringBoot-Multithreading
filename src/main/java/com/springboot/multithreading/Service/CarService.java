@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -13,7 +14,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CarService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CarService.class);
@@ -22,11 +25,11 @@ public class CarService {
     private CarRepository carRepository;
 
     @Async
-    public CompletableFuture<List<Car>> saveCars(final InputStream inputStream)
+    public CompletableFuture<List<Car>> saveCars(final MultipartFile file)
             throws Exception {
         final long start = System.currentTimeMillis();
 
-        List<Car> cars = parseCSVFile(inputStream);
+        List<Car> cars = parseCSVFile(file);
         LOGGER.info("Saving a list of cars of size {} records", cars.size());
 
         cars = carRepository.saveAll(cars);
